@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: inline-grid;
+            grid-template-rows: 240px repeat(4, 120px);
+            grid-template-columns: repeat(2, 250px);
+            grid-template-areas:
+                "big mid1"
+                "big mid2"
+                "sm1 mid2"
+                "sm2 mid3"
+                "sm3 mid3";
+        }
+
+        .container>.image:first-child {
+            grid-area: big;
+            background: #55efc4;
+        }
+
+        .container>.image:nth-child(2) {
+            grid-area: sm1;
+            background: #81ecec;
+        }
+
+        .container>.image:nth-child(3) {
+            grid-area: sm2;
+            background: #ff7675
+        }
+
+        .container>.image:nth-child(4) {
+            grid-area: sm3;
+            background: #00b894
+        }
+
+        .container>.image:nth-child(5) {
+            grid-area: mid1;
+            background: #0984e3
+        }
+
+        .container>.image:nth-child(6) {
+            grid-area: mid2;
+            background: #a29bfe
+        }
+
+        .container>.image:nth-child(7) {
+            grid-area: mid3;
+            background: #636e72
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="image big-img"></div>
+        <div class="image small-img"></div>
+        <div class="image small-img"></div>
+        <div class="image small-img"></div>
+        <div class="image middle-img"></div>
+        <div class="image middle-img"></div>
+        <div class="image middle-img"></div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>float四栏布局/两栏布局</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    ul,
+    ol {
+        list-style: none;
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    .clearfix::after {
+        content: '';
+        display: block;
+        clear: both;
+
+    }
+
+    .logo {
+        display: inline-block;
+        margin-top: 8px;
+        float: left;
+        margin-left: 20px;
+    }
+
+    .logo>img {
+        width: 100px;
+        vertical-align: middle;
+    }
+
+    .nav {
+        float: left;
+        margin-left: 20px;
+    }
+
+    ul>li {
+        float: left;
+        padding: 4px 0.5em;
+        line-height: 32px;
+    }
+
+    ul {
+        display: inline-block;
+    }
+
+    header {
+        background: gray;
+    }
+
+    .content {
+        width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .content>aside {
+        width: 200px;
+        height: 300px;
+        float: left;
+        background: #1abc9c;
+    }
+
+    .content>main {
+        height: 300px;
+        width: 500px;
+        float: left;
+        background: #3498db;
+    }
+
+    .content>.ad {
+        height: 300px;
+        width: 100px;
+        float: left;
+        background: #34495e;
+    }
+
+    .img-list {
+        width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        
+        margin-top: 10px;
+    }
+    .img-list>.x{
+        margin-right:-12px;
+    }
+    .img-list>.x>.image {
+        width: 191px;
+        height: 191px;
+        background: #e67e22;
+        float: left;
+        margin-bottom: 10px;
+        margin-right: 12px;
+    }
+</style>
+
+<body>
+    <header class="clearfix">
+        <div class="logo">
+            <img src="https://static.xiedaimala.com/xdml/cdn/assets/black-logo-25c84e68b3770b75580e7dbba2b77ce68f7fc1794d35afac32057c2d4ea4c498.png"
+                alt="">
+        </div>
+        <ul class="clearfix nav">
+            <li>首页</li>
+            <li>课程</li>
+            <li>优惠</li>
+            <li>关于</li>
+        </ul>
+    </header>
+    <div class="content clearfix">
+        <aside></aside>
+        <main>
+
+        </main>
+        <div class="ad"></div>
+    </div>
+    <div class="img-list ">
+        <div class="x clearfix">
+            <div class="image"></div>
+            <div class="image"></div>
+            <div class="image"></div>
+            <div class="image"></div>
+            <div class="image"></div>
+            <div class="image"></div>
+            <div class="image"></div>
+            <div class="image"></div>
+        </div>
+
+    </div>
+</body>
+
+</html>
