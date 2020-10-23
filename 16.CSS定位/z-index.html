@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>z-index</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        
+    }
+
+    .container {
+        border: 1px solid black;
+        height: 200px;
+        background: #FFF;
+    }
+
+    .a {
+        position: relative;
+        z-index: 1;
+        border: 1px red solid;
+    }
+
+    .a2 {
+        position: relative;
+        z-index: 10;
+        height: 50px;
+        width: 50px;
+        background: red;
+        color: #FFF;
+    }
+
+    .b {}
+
+    .b2 {
+        position: relative;
+        z-index: 5;
+        height: 50px;
+        width: 50px;
+        top: -20px;
+        background: blue;
+        color: #FFF;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="a">1层叠上下文
+            <div class="a2">10</div>
+        </div>
+        <div class="b">
+            <div class="b2">5</div>
+        </div>
+    </div>
+</body>
+
+</html>
