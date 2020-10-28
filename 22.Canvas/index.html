@@ -10,22 +10,51 @@
 </head>
 
 <body>
-    <div id="canvas"></div>
+    <!-- <div id="canvas"></div> -->
     <script>
-        canvas.onclick = (e) => {
-            console.log(e.clientX)
-            console.log(e.clientY)
-            let div = document.createElement('div')
-            div.style.position = 'absolute'
-            div.style.left = e.clientX + 'px'
-            div.style.top = e.clientY + 'px'
-            div.style.width = '6px'
-            div.style.height = '6px'
-            div.style.marginLeft='-3px'
-            div.style.marginTop='-3px'
-            div.style.borderRadius="50%"
-            div.style.background='black'
-            canvas.appendChild(div)
+        /* 用最原始的方法画线，性能很差劲 */
+        // canvas.onmousemove = (e) => {
+        //     console.log(e.clientX)
+        //     console.log(e.clientY)
+        //     let div = document.createElement('div')
+        //     div.style.position = 'absolute'
+        //     div.style.left = e.clientX + 'px'
+        //     div.style.top = e.clientY + 'px'
+        //     div.style.width = '6px'
+        //     div.style.height = '6px'
+        //     div.style.marginLeft='-3px'
+        //     div.style.marginTop='-3px'
+        //     div.style.borderRadius="50%"
+        //     div.style.background='black'
+        //     canvas.appendChild(div)
+        // }
+    </script>
+    <canvas id="canvas" height="100vh" width="100vw">
+
+    </canvas>
+    <script>
+        let canvas = document.getElementById("canvas");
+        canvas.width = document.documentElement.clientWidth
+        canvas.height = document.documentElement.clientHeight
+        //画线
+        let ctx = canvas.getContext("2d");
+        ctx.fillStyle = 'black';
+        ctx.strokeStyle = 'none';
+        let painting = false
+        canvas.onmousemove = (e) => {
+            if (painting === true) {
+                // ctx.fillRect(e.clientX - 5, e.clientY - 5, 10, 10);
+                ctx.beginPath();
+                ctx.arc(e.clientX, e.clientY, 10, 0, 2 * Math.PI);
+                ctx.stroke();
+                ctx.fill()
+            }
+        }
+        canvas.onmousedown = () => {
+            painting = true
+        }
+        canvas.onmouseup = () => {
+            painting = false
         }
     </script>
 </body>
