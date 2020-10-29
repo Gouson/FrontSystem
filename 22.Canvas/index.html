@@ -29,23 +29,38 @@
         //     canvas.appendChild(div)
         // }
     </script>
+    <div class="palette">
+        <div style="background:#e74c3c" onclick="changeColor('#e74c3c')"></div>
+        <div style="background:#1abc9c" onclick="changeColor('#1abc9c')"></div>
+        <div style="background:#3498db" onclick="changeColor('#3498db')"></div>
+        <div style="background:#f1c40f" onclick="changeColor('#f1c40f')"></div>
+        <div style="background:#34495e" onclick="changeColor('#34495e')"></div>
+    </div>
     <canvas id="canvas" height="100vh" width="100vw">
 
     </canvas>
+
     <script>
+        let color = '#34495e'
         let canvas = document.getElementById("canvas");
         canvas.width = document.documentElement.clientWidth
         canvas.height = document.documentElement.clientHeight
         //画线
         let ctx = canvas.getContext("2d");
-        ctx.fillStyle = 'black'
-        ctx.strokeStyle = 'black'
-        ctx.lineWidth= 8
-        ctx.lineCap="round"
+        ctx.fillStyle = color
+        ctx.strokeStyle = color
+        ctx.lineWidth = 8
+        ctx.lineCap = "round"
         let painting = false
         let last
 
-        function drawLine(x1, x2, y1, y2) {
+        function changeColor(c) {
+            color = c
+            ctx.fillStyle = color
+            ctx.strokeStyle = color
+        }
+
+        function drawLine(x1, y1, x2, y2) {
             ctx.beginPath()
             ctx.moveTo(x1, y1)
             ctx.lineTo(x2, y2)
@@ -53,18 +68,19 @@
         }
         var isTouchDevice = 'ontouchstart' in document.documentElement
         if (isTouchDevice) {
+            canvas.ontouchstart = (e) => {
+                last = [e.touches[0].clientX, e.touches[0].clientY]
+            }
             canvas.ontouchmove = (e) => {
-                ctx.beginPath();
-                ctx.arc(e.touches[0].clientX, e.touches[0].clientY, 10, 0, 2 * Math.PI);
-                ctx.stroke();
-                ctx.fill()
+                drawLine(last[0], last[1], e.touches[0].clientX, e.touches[0].clientY)
+                last = [e.touches[0].clientX, e.touches[0].clientY]
             }
         } else {
             canvas.onmousemove = (e) => {
                 console.log(last, e.clientX, e.clientY)
                 if (painting === true) {
-                   // drawLine(last[0], last[1], e.clientX, e.clientY)
-                   console.log(last[0], last[1])
+                    drawLine(last[0], last[1], e.clientX, e.clientY)
+                    console.log(last[0], last[1])
                     last = [e.clientX, e.clientY]
                 }
             }

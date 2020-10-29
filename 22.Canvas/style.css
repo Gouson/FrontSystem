@@ -7,3 +7,14 @@
     display: block;
     /* canvas元素默认是inline的，把它改成block */
 }
+.palette{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+.palette>div{
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    margin: auto;
+}
