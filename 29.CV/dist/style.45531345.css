@@ -1,0 +1,2 @@
+*{margin:0;padding:0;box-sizing:border-box}#demo{word-break:break-all}#div1{position:fixed;right:20px;top:20px}#div1:after,#div1:before{content:"";position:absolute}@media(max-width:500px){#div1wrapper{height:50vh}#div1{position:relative;top:0;right:0}#demo{height:50vh;overflow:auto}}
+/*# sourceMappingURL=style.45531345.css.map */
