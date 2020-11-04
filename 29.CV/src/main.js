@@ -2,7 +2,7 @@ let html = document.querySelector('#demo')
 let style = document.querySelector('#style')
 let string = `/*
 hi
-我要加样式了
+我要搞一个太极图
 我要加的样式是
 */
 #div1{
