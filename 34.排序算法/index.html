@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>排序算法</title>
+</head>
+
+<body>
+    <h1>选择排序</h1>
+    <script>
+        function getMinIndex(numbers) {
+            let minIndex = 0
+            for (let i = 1; i < numbers.length; i++) {
+                if (numbers[i] < numbers[minIndex]) {
+                    minIndex = i
+                }
+            }
+            return minIndex
+        }
+
+        function swap(numbers, i, j) {
+            let temp = numbers[i]
+            numbers[i] = numbers[j]
+            numbers[j] = temp
+        }
+
+        function selectSort(numbers) {
+            for (let i = 0; i < numbers.length - 1; i++) {
+                let index = getMinIndex(numbers.slice(i)) + i
+                if (index !== i) {
+                    swap(numbers, index, i)
+                }
+            }
+            return numbers
+        }
+        console.log(selectSort([12, 4, 3, 1, 5]))
+    </script>
+    <h1>快速排序</h1>
+    <script>
+        let quickSort = (numbers) => {
+            if (numbers.length <= 1) {
+                return numbers
+            }
+            let midNumbersIndex = Math.floor((numbers.length) / 2)
+            let midNumber = numbers.splice(midNumbersIndex, 1)[0]
+            let left = []
+            let right = []
+            for (let i = 0; i < numbers.length; i++) {
+                if (numbers[i] < midNumber) {
+                    left.push(numbers[i])
+                } else {
+                    right.push(numbers[i])
+                }
+            }
+            return quickSort(left).concat(midNumber, quickSort(right))
+        }
+        console.log(quickSort([12, 4, 3, 1, 5]))
+    </script>
+    <h1>归并排序</h1>
+    <script>
+        let mergeSort = (numbers) => {
+            if (numbers.length === 1) {
+                return numbers
+            }
+            let midNumbersIndex = Math.floor((numbers.length) / 2)
+            let left = numbers.slice(0, midNumbersIndex)
+            let right = numbers.slice(midNumbersIndex)
+            return merge(mergeSort(left), mergeSort(right))
+        }
+        let merge = (arr1, arr2) => {
+            if (arr1.length === 0) {
+                return arr2
+            }
+            if (arr2.length === 0) {
+                return arr1
+            }
+            return arr1[0] < arr2[0] ? [arr1[0]].concat(merge(arr1.slice(1), arr2)) : [arr2[0]].concat(merge(arr1,
+                arr2
+                .slice(1)))
+        }
+        console.log(mergeSort([12, 4, 3, 1, 5]))
+    </script>
+    <h1>计数排序</h1>
+    <script>
+        let hashSort = (numbers) => {
+            let hash = {}
+            let max = 0
+            let result = []
+            for (let i = 0; i < numbers.length; i++) {
+                if (!(numbers[i] in hash)) {
+                    hash[numbers[i]] = 1
+                } else {
+                    hash[numbers[i]] += 1
+                }
+                if (max < numbers[i]) {
+                    max = numbers[i]
+                }
+            }
+            for (let j = 0; j <= max; j++) {
+                if (j in hash) {
+                    let value = hash[j]
+                    for (let n = 0; n < value; n++) {
+                        result.push(j)
+                    }
+                }
+            }
+            return result
+        }
+        console.log(hashSort([12, 4, 3, 1, 5]))
+    </script>
+</body>
+
+</html>
