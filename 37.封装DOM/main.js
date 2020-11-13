@@ -1,0 +1,5 @@
+const div = dom.create('<div>666</div>')
+const node1 = document.querySelector('div')
+console.log(node1.parentElement)
+dom.after(node1, div)
+dom.empty(empty)
