@@ -16,3 +16,7 @@ const x = $('.test1').find('.child')
 $('<div>新的div</div>').appendTo($('.test1'))
 x.addClass('tt')
 console.log(x.index())
+
+$('#div1').on("click", "button", () => {
+    console.log("按钮被点击");
+});

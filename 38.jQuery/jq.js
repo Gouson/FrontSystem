@@ -145,5 +145,21 @@ jQuery.fn = jQuery.prototype = {
     },
     end() {
         return this.oldApi
+    },
+    on(eventType, selector, fn) {
+        this.each(node => {
+            node.addEventListener(eventType, (e) => {
+                let el = e.target;
+                while (!el.matches(selector)) {
+                    if (element === el) {
+                        el = null;
+                        break;
+                    }
+                    el = el.parentNode;
+                }
+                el && fn.call(el.e, el);
+            });
+        })
+        return this
     }
 }
