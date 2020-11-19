@@ -12,8 +12,10 @@
 <body>
     <header class="globalHeader">
         <form class="searchForm" method="GET" action="https://www.baidu.com/s" target="_blank">
-            <input name="wd" type="text">
-            <button type="submit">搜索</button>
+            <svg class="icon">
+                <use xlink:href="#icon-google"></use>
+            </svg>
+            <input id="searchValue" name="wd" type="text">
         </form>
     </header>
     <main class="globalMain">
@@ -28,7 +30,10 @@
             </li>
         </ul>
     </main>
-    <script src="//at.alicdn.com/t/font_2212013_apbvyb9e4q5.js"></script>
+    <svg class="icon shiftModel">
+        <use xlink:href="#icon-yueliang" class="shiftIcon"></use>
+    </svg>
+    <script src="//at.alicdn.com/t/font_2212013_w5qdsi8f57.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="main.js"></script>
 </body>
