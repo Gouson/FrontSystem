@@ -24,6 +24,7 @@ var server = http.createServer(function(request, response) {
     if (path === '/index.html') {
         response.statusCode = 200
         response.setHeader('Content-Type', 'text/html;charset=utf-8')
+        response.setHeader('Access-Control-Allow-Origin', 'http://gouson.com:8889')
         const page1 = fs.readFileSync('db/page1.json')
         const array = JSON.parse(page1)
         result = array.map(item =>
