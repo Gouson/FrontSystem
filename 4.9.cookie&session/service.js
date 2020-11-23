@@ -37,30 +37,113 @@ var server = http.createServer(function(request, response) {
     //   response.write(`<div>你访问的页面不存在</div>`)
     //   response.end()
     // }
-    response.statusCode = 200
+    if (path === '/home.html') {
+        const cookie = request.headers['cookie']
+        let userId
+        try {
+            userId = cookie.split(';').filter(s => s.indexOf('user_id=') >= 0)[0].split('=')[1]
 
-    const filePath = path === '/' ? '/index.html' : path
-    const index = filePath.lastIndexOf('.')
-    const suffix = filePath.substring(index)
-    const fileType = {
-        '.html': 'text/html',
-        '.css': 'text/css',
-        '.js': 'text/javascript',
-        '.png':'image/png',
-        '.jpg':'image/jpeg'
-    }
-    response.setHeader('Content-Type', `${fileType[suffix] || 'text/html'};charset=utf-8`)
-    let content
-    try {
-        content = fs.readFileSync(`./public${filePath}`)
-    } catch (error) {
-        response.statusCode = 404
-        content = `文件不存在`
-    }
+        } catch (error) {
 
-    response.write(content)
-    response.end()
-        /******** 代码结束，下面不要看 ************/
+        }
+
+        if (userId) {
+            const usersArray = JSON.parse(fs.readFileSync('./db/users.json').toString())
+            const user = usersArray.find(u =>
+                u.id.toString() === userId.toString()
+            )
+            let homeHtml = fs.readFileSync(`./public/home.html`).toString()
+            let string = ``
+            console.log(user)
+            if (user) {
+                string = homeHtml.replace('{{loginStatus}}', '已登录').replace('{{user.name}}', user.name)
+
+            } else {
+                string = homeHtml.replace('{{loginStatus}}', '未登录').replace('{{user.name}}', '')
+            }
+            response.write(string)
+        } else {
+            string = homeHtml.replace('{{loginStatus}}', '未登录').replace('{{user.name}}', '')
+            response.write(string)
+        }
+        // response.setHeader('Content-Type', 'text/html;charset=utf-8')
+        // response.statusCode = 200
+        response.end()
+    } else if (path === '/sign_in' && method === 'POST') {
+        response.setHeader('Content-Type', 'text/html;charset=utf-8')
+        const array = [
+
+            ]
+            //读取数据库
+        const usersArray = JSON.parse(fs.readFileSync('./db/users.json').toString())
+        request.on('data', (chunk) => {
+            array.push(chunk)
+        })
+        request.on('end', () => {
+            const string = Buffer.concat(array).toString()
+            const obj = JSON.parse(string)
+            const user = usersArray.find(user =>
+                user.name === obj.name && user.password === obj.password
+            )
+            if (user === undefined) {
+                response.statusCode = 400
+                response.setHeader('Content-Type', 'text/json;charset=utf-8')
+                response.end(`{"errorCode":4001}`)
+            } else {
+                response.statusCode = 200
+                response.setHeader('Set-Cookie', `user_id=${user.id};HttpOnly`)
+                response.end()
+            }
+        })
+        response.statusCode = 200
+    } else if (path === '/register' && method === 'POST') {
+
+        response.setHeader('Content-Type', 'text/html;charset=utf-8')
+        const array = [
+
+            ]
+            //读取数据库
+        const usersArray = JSON.parse(fs.readFileSync('./db/users.json').toString())
+        request.on('data', (chunk) => {
+            array.push(chunk)
+        })
+        request.on('end', () => {
+            const string = Buffer.concat(array).toString()
+            const obj = JSON.parse(string)
+            const lastUser = usersArray[usersArray.length - 1]
+            const newUser = { id: lastUser ? lastUser.id + 1 : 1, name: obj.name, password: obj.password }
+                //写入数据哭
+            usersArray.push(newUser)
+            fs.writeFileSync('./db/users.json', JSON.stringify(usersArray))
+            response.end('很好')
+        })
+        response.statusCode = 200
+
+    } else {
+        response.statusCode = 200
+        const filePath = path === '/' ? '/index.html' : path
+        const index = filePath.lastIndexOf('.')
+        const suffix = filePath.substring(index)
+        const fileType = {
+            '.html': 'text/html',
+            '.css': 'text/css',
+            '.js': 'text/javascript',
+            '.png': 'image/png',
+            '.jpg': 'image/jpeg'
+        }
+        response.setHeader('Content-Type', `${fileType[suffix] || 'text/html'};charset=utf-8`)
+        let content
+        try {
+            content = fs.readFileSync(`./public${filePath}`)
+        } catch (error) {
+            response.statusCode = 404
+            content = `文件不存在`
+        }
+
+        response.write(content)
+        response.end()
+    }
+    /******** 代码结束，下面不要看 ************/
 })
 
 server.listen(port)
