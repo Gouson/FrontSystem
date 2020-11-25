@@ -8,11 +8,13 @@ if (!port) {
     process.exit(1)
 }
 
-var server = http.createServer(function(request, response) {
+var server = http.createServer(function (request, response) {
     var parsedUrl = url.parse(request.url, true)
     var pathWithQuery = request.url
     var queryString = ''
-    if (pathWithQuery.indexOf('?') >= 0) { queryString = pathWithQuery.substring(pathWithQuery.indexOf('?')) }
+    if (pathWithQuery.indexOf('?') >= 0) {
+        queryString = pathWithQuery.substring(pathWithQuery.indexOf('?'))
+    }
     var path = parsedUrl.pathname
     var query = parsedUrl.query
     var method = request.method
@@ -37,27 +39,27 @@ var server = http.createServer(function(request, response) {
     //   response.write(`<div>你访问的页面不存在</div>`)
     //   response.end()
     // }
+    const session = JSON.parse(fs.readFileSync('./session.json').toString())
     if (path === '/home.html') {
         const cookie = request.headers['cookie']
-        let userId
+        let sessionId
         try {
-            userId = cookie.split(';').filter(s => s.indexOf('user_id=') >= 0)[0].split('=')[1]
+            sessionId = cookie.split(';').filter(s => s.indexOf('session_id=') >= 0)[0].split('=')[1]
 
         } catch (error) {
 
         }
-
-        if (userId) {
+        let homeHtml = fs.readFileSync(`./public/home.html`).toString()
+        if (sessionId && session[sessionId]) {
+            const userId = session[sessionId].user_id
             const usersArray = JSON.parse(fs.readFileSync('./db/users.json').toString())
             const user = usersArray.find(u =>
-                u.id.toString() === userId.toString()
+                u.id === userId
             )
-            let homeHtml = fs.readFileSync(`./public/home.html`).toString()
             let string = ``
             console.log(user)
             if (user) {
                 string = homeHtml.replace('{{loginStatus}}', '已登录').replace('{{user.name}}', user.name)
-
             } else {
                 string = homeHtml.replace('{{loginStatus}}', '未登录').replace('{{user.name}}', '')
             }
@@ -73,8 +75,8 @@ var server = http.createServer(function(request, response) {
         response.setHeader('Content-Type', 'text/html;charset=utf-8')
         const array = [
 
-            ]
-            //读取数据库
+        ]
+        //读取数据库
         const usersArray = JSON.parse(fs.readFileSync('./db/users.json').toString())
         request.on('data', (chunk) => {
             array.push(chunk)
@@ -91,7 +93,13 @@ var server = http.createServer(function(request, response) {
                 response.end(`{"errorCode":4001}`)
             } else {
                 response.statusCode = 200
-                response.setHeader('Set-Cookie', `user_id=${user.id};HttpOnly`)
+                const random = Math.random()
+
+                session[random] = {
+                    user_id: user.id
+                }
+                fs.writeFileSync('./session.json', JSON.stringify(session))
+                response.setHeader('Set-Cookie', `session_id=${random};HttpOnly`)
                 response.end()
             }
         })
@@ -101,8 +109,8 @@ var server = http.createServer(function(request, response) {
         response.setHeader('Content-Type', 'text/html;charset=utf-8')
         const array = [
 
-            ]
-            //读取数据库
+        ]
+        //读取数据库
         const usersArray = JSON.parse(fs.readFileSync('./db/users.json').toString())
         request.on('data', (chunk) => {
             array.push(chunk)
@@ -111,8 +119,12 @@ var server = http.createServer(function(request, response) {
             const string = Buffer.concat(array).toString()
             const obj = JSON.parse(string)
             const lastUser = usersArray[usersArray.length - 1]
-            const newUser = { id: lastUser ? lastUser.id + 1 : 1, name: obj.name, password: obj.password }
-                //写入数据哭
+            const newUser = {
+                id: lastUser ? lastUser.id + 1 : 1,
+                name: obj.name,
+                password: obj.password
+            }
+            //写入数据哭
             usersArray.push(newUser)
             fs.writeFileSync('./db/users.json', JSON.stringify(usersArray))
             response.end('很好')
