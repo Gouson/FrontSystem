@@ -1,0 +1,19 @@
+#app4 .circle {
+    width: 20vw;
+    height: 20vw;
+    border-radius: 50%;
+    border: 1px #0984e3 solid;
+}
+
+@keyframes change {
+    0% {
+        background: #ff7675;
+    }
+    100% {
+        background: #00b894;
+    }
+}
+
+#app4 .circle.active {
+    animation: change 1s infinite alternate linear;
+}
