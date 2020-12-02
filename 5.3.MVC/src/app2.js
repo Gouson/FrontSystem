@@ -1,21 +1,22 @@
 import $ from "jquery"
 import './app2.css'
+import Model from "./base/Model.js"
 const eventBus = $(window)
 const localKey = 'app2.index'
-const m = {
+const m = new Model({
     data: {
         index: parseInt(localStorage.getItem(localKey)) || 0
     },
-    create() {},
-    delete() {},
     update(data) {
         Object.assign(m.data, data)
         eventBus.trigger('m:updated')
         localStorage.setItem(localKey, m.data.index)
-    },
-    get() {}
-}
+    }
+})
 const v = {
+
+}
+const c = {
     el: null,
     html: (index) => {
         return `
@@ -31,21 +32,16 @@ const v = {
     </div>
     `
     },
-    init(container) {
-        v.el = $(container)
-    },
     render(index) {
-        if (v.el.children.length !== 0) v.el.empty()
-        $(v.html(index)).appendTo(v.el)
-    }
-}
-const c = {
-    init(el) {
-        v.init(el)
-        v.render(m.data.index) //view= render(data)
+        if (c.el.children.length !== 0) c.el.empty()
+        $(c.html(index)).appendTo(c.el)
+    },
+    init(container) {
+        c.el = $(container)
+        c.render(m.data.index) //view= render(data)
         c.autoBindEvents()
         eventBus.on('m:updated', () => {
-            v.render(m.data.index)
+            c.render(m.data.index)
         })
     },
     events: {
@@ -53,7 +49,9 @@ const c = {
     },
     x(e) {
         const index = parseInt(e.currentTarget.dataset.index)
-        m.update({ index })
+        m.update({
+            index
+        })
     },
     autoBindEvents() {
         for (let key in c.events) {
@@ -61,21 +59,8 @@ const c = {
             const part1 = key.slice(0, spaceIndex)
             const part2 = key.slice(spaceIndex + 1)
             const value = c[c.events[key]]
-            v.el.on(part1, part2, value)
+            c.el.on(part1, part2, value)
         }
     }
 }
-
-// const $tabBar = $('#app2 .tab-bar')
-// const $tabContent = $('#app2 .tab-content')
-
-// $tabBar.on('click', 'li', (e) => {
-//     const $li = $(e.currentTarget)
-//     $li.addClass('selected').siblings().removeClass('selected')
-//     const index = $li.index()
-//     localStorage.setItem(localKey, index)
-//     $tabContent.children().eq($(e.currentTarget).index()).addClass('active').siblings().removeClass('active')
-// })
-
-// $tabBar.children().eq(index).trigger('click')
 export default c
