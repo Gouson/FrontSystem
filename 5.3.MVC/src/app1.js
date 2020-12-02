@@ -2,6 +2,7 @@ import $ from "jquery";
 import "./app1.css";
 import Model from "./base/Model.js";
 import View from "./base/View.js"
+import Vue from 'vue'
 //数据相关 都放到m
 const m = new Model({
     data: {
@@ -32,6 +33,13 @@ const v = {
 }
 //其他相关都放到c
 const init = (el) => {
+    new Vue({
+        el: el,
+        template: `
+        <div></div>
+        `
+    })
+    return
     new View({
         el: el,
         data: m.data,
