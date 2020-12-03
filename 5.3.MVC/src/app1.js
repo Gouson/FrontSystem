@@ -35,9 +35,20 @@ const v = {
 const init = (el) => {
     new Vue({
         el: el,
-        template: `
-        <div></div>
-        `
+        data: {
+            n: parseFloat(localStorage.getItem("n"))
+        },
+        template: ` <div>
+        <div class="output">
+            <span id="number">{{n}}</span>
+        </div>
+        <div class="actions">
+            <button id="add1">+1</button>
+            <button id="minus1"> -1</button>
+            <button id="mul2">*2</button>
+            <button id="divide2">/2</button>
+        </div>
+    </div>`
     })
     return
     new View({
