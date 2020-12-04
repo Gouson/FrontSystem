@@ -1,21 +1,13 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const base = require('./webpack.config.base.js')
 module.exports = {
-    mode: 'development',
+    ...base,
     devtool: 'inline-source-map',
     devServer: {
         contentBase: './dist'
     },
-    entry: './src/index.js',
-    output: {
-        filename: '[name].[contenthash].js'
-    },
-    plugins: [new HtmlWebpackPlugin({
-        title: 'Gouson',
-        filename: 'index.html',
-        template: 'src/assets/template.html'
-    })],
+    mode: 'development',
     module: {
         rules: [{
             test: /\.css$/i,
