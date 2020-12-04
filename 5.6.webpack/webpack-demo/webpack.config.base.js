@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    mode: 'development',
+    mode: 'production',
     devtool: 'inline-source-map',
     devServer: {
         contentBase: './dist'
@@ -17,9 +17,6 @@ module.exports = {
         template: 'src/assets/template.html'
     })],
     module: {
-        rules: [{
-            test: /\.css$/i,
-            use: ["style-loader", "css-loader"]
-        }]
+        rules: []
     }
 };

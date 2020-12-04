@@ -1,8 +1,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    mode: 'development',
+    mode: 'production',
     devtool: 'inline-source-map',
     devServer: {
         contentBase: './dist'
@@ -15,11 +16,22 @@ module.exports = {
         title: 'Gouson',
         filename: 'index.html',
         template: 'src/assets/template.html'
+    }), new MiniCssExtractPlugin({
+        filename: '[name].[contenthash].css',
+        chunkFilename: '[id].[contenthash].css',
+        ignoreOrder: false
     })],
     module: {
         rules: [{
             test: /\.css$/i,
-            use: ["style-loader", "css-loader"]
+            use: [{
+                    loader: MiniCssExtractPlugin.loader,
+                    options: {
+                        publicPath: '../',
+                    },
+                },
+                'css-loader',
+            ]
         }]
     }
 };
