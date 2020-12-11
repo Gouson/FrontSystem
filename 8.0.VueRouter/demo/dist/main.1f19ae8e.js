@@ -118,9 +118,13 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"main.js":[function(require,module,exports) {
-//路由表
+var app = document.querySelector('#app');
 var div1 = document.createElement('div');
-div1.innerHTML = '1';
+div1.innerHTML = '1'; // const view1 = document.createElement('div')
+// view1.style.background = 'red'
+// view1.style.height = '50px'
+// div1.appendChild(view1)
+
 var div2 = document.createElement('div');
 div2.innerHTML = '2';
 var div3 = document.createElement('div');
@@ -128,7 +132,8 @@ div3.innerHTML = '3';
 var div4 = document.createElement('div');
 div4.innerHTML = '4';
 var div404 = document.createElement('div');
-div404.innerHTML = '未找到内容';
+div404.innerHTML = '未找到内容'; //路由表
+
 var routeTable = {
   '1': div1,
   '2': div2,
@@ -136,15 +141,26 @@ var routeTable = {
   '4': div4,
   '404': div404
 };
-route();
+var div11 = document.createElement('div');
+div11.innerHTML = '1.1';
+var div12 = document.createElement('div');
+div12.innerHTML = '1.2';
+var div13 = document.createElement('div');
+div13.innerHTML = '1.3'; // //div1的子路由
+// const route1Table = {
+//     "1/1": div11,
+//     "1/2": div12,
+//     "1/3": div13
+// }
+
+route(app);
 window.addEventListener('hashchange', function () {
-  route();
+  route(app);
 });
 
-function route() {
+function route(el) {
   //获取用户去哪
   var number = window.location.hash.substr(1);
-  var app = document.querySelector('#app');
   number = number || 1; //获取界面
 
   var div = routeTable[number.toString()];
@@ -153,8 +169,8 @@ function route() {
     div = routeTable['404'];
   }
 
-  app.innerHTML = "";
-  if (app) app.appendChild(div);
+  el.innerHTML = "";
+  el.appendChild(div);
 }
 },{}],"C:/Users/admin/AppData/Local/Yarn/Data/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
