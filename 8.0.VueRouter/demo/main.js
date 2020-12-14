@@ -21,11 +21,11 @@ div404.innerHTML = '未找到内容'
 
 //路由表
 const routeTable = {
-    '1': div1,
-    '2': div2,
-    '3': div3,
-    '4': div4,
-    '404': div404
+    '/1': div1,
+    '/2': div2,
+    '/3': div3,
+    '/4': div4,
+    '/404': div404
 }
 
 const div11 = document.createElement('div')
@@ -34,13 +34,21 @@ const div12 = document.createElement('div')
 div12.innerHTML = '1.2'
 const div13 = document.createElement('div')
 div13.innerHTML = '1.3'
-// //div1的子路由
-// const route1Table = {
-//     "1/1": div11,
-//     "1/2": div12,
-//     "1/3": div13
-// }
 
+const allA = document.querySelectorAll('a.link')
+for (const a of allA) {
+    a.addEventListener('click', (e) => {
+        e.preventDefault()
+        const href = a.getAttribute("href")
+        window.history.pushState(null, `page${href}`, href)
+        //通知
+        onStateChange(href)
+    })
+}
+
+function onStateChange(href) {
+    route(app)
+}
 route(app)
 window.addEventListener('hashchange', () => {
     route(app)
@@ -48,12 +56,14 @@ window.addEventListener('hashchange', () => {
 
 function route(el) {
     //获取用户去哪
-    let number = window.location.hash.substr(1)
-    number = number || 1
+    let number = window.location.pathname
+    if (number === '/') {
+        number = '/1'
+    }
     //获取界面
     let div = routeTable[number.toString()]
     if (!div) {
-        div = routeTable['404']
+        div = routeTable['/404']
     }
     el.innerHTML = ""
     el.appendChild(div)

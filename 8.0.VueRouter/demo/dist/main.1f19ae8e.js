@@ -118,6 +118,12 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"main.js":[function(require,module,exports) {
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 var app = document.querySelector('#app');
 var div1 = document.createElement('div');
 div1.innerHTML = '1'; // const view1 = document.createElement('div')
@@ -135,23 +141,47 @@ var div404 = document.createElement('div');
 div404.innerHTML = '未找到内容'; //路由表
 
 var routeTable = {
-  '1': div1,
-  '2': div2,
-  '3': div3,
-  '4': div4,
-  '404': div404
+  '/1': div1,
+  '/2': div2,
+  '/3': div3,
+  '/4': div4,
+  '/404': div404
 };
 var div11 = document.createElement('div');
 div11.innerHTML = '1.1';
 var div12 = document.createElement('div');
 div12.innerHTML = '1.2';
 var div13 = document.createElement('div');
-div13.innerHTML = '1.3'; // //div1的子路由
-// const route1Table = {
-//     "1/1": div11,
-//     "1/2": div12,
-//     "1/3": div13
-// }
+div13.innerHTML = '1.3';
+var allA = document.querySelectorAll('a.link');
+
+var _iterator = _createForOfIteratorHelper(allA),
+    _step;
+
+try {
+  var _loop = function _loop() {
+    var a = _step.value;
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      var href = a.getAttribute("href");
+      window.history.pushState(null, "page".concat(href), href); //通知
+
+      onStateChange(href);
+    });
+  };
+
+  for (_iterator.s(); !(_step = _iterator.n()).done;) {
+    _loop();
+  }
+} catch (err) {
+  _iterator.e(err);
+} finally {
+  _iterator.f();
+}
+
+function onStateChange(href) {
+  route(app);
+}
 
 route(app);
 window.addEventListener('hashchange', function () {
@@ -160,13 +190,17 @@ window.addEventListener('hashchange', function () {
 
 function route(el) {
   //获取用户去哪
-  var number = window.location.hash.substr(1);
-  number = number || 1; //获取界面
+  var number = window.location.pathname;
+
+  if (number === '/') {
+    number = '/1';
+  } //获取界面
+
 
   var div = routeTable[number.toString()];
 
   if (!div) {
-    div = routeTable['404'];
+    div = routeTable['/404'];
   }
 
   el.innerHTML = "";
@@ -200,7 +234,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49270" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61322" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
