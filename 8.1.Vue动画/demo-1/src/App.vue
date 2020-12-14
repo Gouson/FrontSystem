@@ -1,43 +1,51 @@
 <template>
-  <div>
-    <input type="radio" id="one" value="v-a" v-model="view" />
-    <label for="one">A</label>
-    <br />
-    <input type="radio" id="two" value="v-b" v-model="view" />
-    <label for="two">B</label>
-    <br />
-    <transition name="component-fade" mode="out-in">
-      <component v-bind:is="view"></component>
-    </transition>
+  <div id="list-demo" class="demo">
+    <button v-on:click="add">Add</button>
+    <button v-on:click="remove">Remove</button>
+    <transition-group name="list" tag="p">
+      <span v-for="item in items" v-bind:key="item" class="list-item">
+        {{ item }}
+      </span>
+    </transition-group>
   </div>
 </template>
 
 <script>
 export default {
   name: "App",
-  components: {
-    "v-a": {
-      template: "<div>Component A</div>",
-    },
-    "v-b": {
-      template: "<div>Component B</div>",
-    },
-  },
   data() {
     return {
-      view: "v-a",
+      items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      nextNum: 10,
     };
+  },
+  methods: {
+    randomIndex: function() {
+      return Math.floor(Math.random() * this.items.length);
+    },
+    add: function() {
+      this.items.splice(this.randomIndex(), 0, this.nextNum++);
+    },
+    remove: function() {
+      this.items.splice(this.randomIndex(), 1);
+    },
   },
 };
 </script>
 
 <style lang="scss">
-.component-fade-enter-active,
-.component-fade-leave-active {
-  transition: opacity 0.3s ease;
+.list-item {
+  display: inline-block;
+  margin-right: 10px;
+  transition: 1s all;
 }
-.component-fade-enter, .component-fade-leave-to
-/* .component-fade-leave-active for below version 2.1.8 */ {
+.list-enter-active,
+.list-leave-active {
+  transition: all 1s;
+}
+.list-enter, .list-leave-to
+/* .list-leave-active for below version 2.1.8 */ {
   opacity: 0;
+  transform: translateY(30px);
 }
 </style>
