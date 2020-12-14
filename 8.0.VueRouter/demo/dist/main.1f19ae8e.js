@@ -163,8 +163,9 @@ try {
     var a = _step.value;
     a.addEventListener('click', function (e) {
       e.preventDefault();
-      var href = a.getAttribute("href");
-      window.history.pushState(null, "page".concat(href), href); //通知
+      var href = a.getAttribute("href"); // window.history.pushState(null, `page${href}`, href)
+
+      window.localStorage.setItem('xxx', href); //通知
 
       onStateChange(href);
     });
@@ -190,9 +191,9 @@ window.addEventListener('hashchange', function () {
 
 function route(el) {
   //获取用户去哪
-  var number = window.location.pathname;
+  var number = window.localStorage.getItem('xxx');
 
-  if (number === '/') {
+  if (!number) {
     number = '/1';
   } //获取界面
 

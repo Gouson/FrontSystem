@@ -40,7 +40,8 @@ for (const a of allA) {
     a.addEventListener('click', (e) => {
         e.preventDefault()
         const href = a.getAttribute("href")
-        window.history.pushState(null, `page${href}`, href)
+        // window.history.pushState(null, `page${href}`, href)
+        window.localStorage.setItem('xxx', href)
         //通知
         onStateChange(href)
     })
@@ -56,8 +57,8 @@ window.addEventListener('hashchange', () => {
 
 function route(el) {
     //获取用户去哪
-    let number = window.location.pathname
-    if (number === '/') {
+    let number = window.localStorage.getItem('xxx')
+    if (!number) {
         number = '/1'
     }
     //获取界面
