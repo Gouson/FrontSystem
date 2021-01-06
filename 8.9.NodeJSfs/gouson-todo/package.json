@@ -1,7 +1,13 @@
 {
   "name": "gouson-todo",
+  "bin": {
+    "g": "cli.js"
+  },
+  "files": [
+    "*.js"
+  ],
   "version": "0.0.1",
-  "main": "index.js",
+  "main": "cli.js",
   "license": "MIT",
   "dependencies": {
     "commander": "3.0.2",
