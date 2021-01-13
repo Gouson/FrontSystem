@@ -1,0 +1,41 @@
+Arguments: 
+  D:\Dev\Nodejs\node.exe D:\Dev\Nodejs\node_modules\yarn\bin\yarn.js add --dev @type/node
+
+PATH: 
+  D:\software\cmder\vendor\git-for-windows\mingw64\bin;D:\software\cmder\vendor\git-for-windows\usr\bin;C:\Users\admin\bin;D:\Dev\MySql\MySQL Server 8.0\bin;C:\ProgramData\Oracle\Java\javapath;D:\Dev\JAVA\jdk1.8.0_131\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;D:\Dev\Git\cmd;D:\Dev\apache-maven-3.6.1\bin;C:\Program Files (x86)\NetCDF4Excel;D:\Dev\Nodejs;C:\Users\admin\AppData\Local\Yarn\bin;D:\Dev\Python\Scripts;D:\Dev\Python;C:\Users\admin\AppData\Local\Microsoft\WindowsApps;D:\Dev\Microsoft VS Code\bin;C:\Users\admin\AppData\Local\BypassRuntm;C:\Users\admin\AppData\Local\GitHubDesktop\bin;C:\Users\admin\AppData\Local\Microsoft\WindowsApps;C:\Users\admin\AppData\Roaming\npm;C:\Users\admin\AppData\Local\Yarn\bin;D:\Dev\WebStorm 2020.3\bin
+
+Yarn version: 
+  1.22.5
+
+Node version: 
+  12.18.4
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: https://registry.npm.taobao.org/@type%2fnode: Not found
+      at Request.params.callback [as _callback] (D:\Dev\Nodejs\node_modules\yarn\lib\cli.js:66988:18)
+      at Request.self.callback (D:\Dev\Nodejs\node_modules\yarn\lib\cli.js:140662:22)
+      at Request.emit (events.js:315:20)
+      at Request.<anonymous> (D:\Dev\Nodejs\node_modules\yarn\lib\cli.js:141634:10)
+      at Request.emit (events.js:315:20)
+      at IncomingMessage.<anonymous> (D:\Dev\Nodejs\node_modules\yarn\lib\cli.js:141556:12)
+      at Object.onceWrapper (events.js:421:28)
+      at IncomingMessage.emit (events.js:327:22)
+      at endReadableNT (_stream_readable.js:1220:12)
+      at processTicksAndRejections (internal/process/task_queues.js:84:21)
+
+npm manifest: 
+  {
+    "name": "servers",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
