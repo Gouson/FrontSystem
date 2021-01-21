@@ -7,35 +7,31 @@
     <title>首页</title>
 </head>
 <style>
-    .demo {
-        background: #3498db;
-        width: 200px;
-        height: 200px;
-        border: 15px solid#e74c3c;
-        padding: 10px;
+    h2 {
+        background-image: url(data:image/png;base64,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);
     }
 
-    .child {
-        background: #ecf0f1;
-        height: 50px;
-        margin-top: -10px;
+    .box {
+        display: inline-block;
+        border: 1px solid red;
+        width: 100px;
+        /* vertical-align: bottom; */
+        margin: 0 auto;
     }
 
-    .float {
-        float: left;
-        background: #2ecc71;
-        height: 50px;
-        width: 50px;
-        margin-right: -10px;
+    .box:nth-child(3) {
+        font-size: 20px;
     }
 </style>
 
 <body>
-    <div class="demo">
-        文字内容
-        <div class="float"></div>
-        <div class="child"></div>
+    <div class="box">你好世界，欢迎来到几人股</div>
+    <div class="box">2</div>
+    <div class="box">你好世界，欢迎来到几人股</div>
+    <div>
+        <h2 style="display: none;">123123</h2>
     </div>
+
 </body>
 
 <script>
