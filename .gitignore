@@ -7,4 +7,7 @@ node_modules
 # dist
 # dist/
 # /dist/
-.idea/
+/.idea/
+/.vscode/
+/9.3.NodeTranslate/src/private.ts
+/9.3.NodeTranslate/dist
