@@ -10,6 +10,7 @@ const db = {
             fs.readFile(path, {
                 flag: 'a+',
             }, (error, data) => {
+                
                 if (error) {
                     return reject(error)
                 }
